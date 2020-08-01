@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Данный модуль реализует полезные инструменты для автоматизации
@@ -236,7 +235,7 @@ def makeExecFile(filename):
     os.chmod(filename, st.st_mode | stat.S_IEXEC)
 
 
-if __name__ == '__main__':
+def main():
 
     if len(sys.argv) == 1:
         # если stdin связан с КОНСОЛЬЮ
