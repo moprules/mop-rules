@@ -1,29 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from setuptools import find_packages, setup
+from urllib.request import urlopen
 
-try:
-    # pip >=20
-    from pip._internal.network.session import PipSession
-    from pip._internal.req import parse_requirements
-except ImportError:
-    try:
-        # 10.0.0 <= pip <= 19.3.1
-        from pip._internal.download import PipSession
-        from pip._internal.req import parse_requirements
-    except ImportError:
-        # pip <= 9.0.3
-        from pip.download import PipSession
-        from pip.req import parse_requirements
+def get_requirements():
+    send = urlopen('https://raw.githubusercontent.com/ogurechik/mop/master/requirements.txt')
+    reqs = [lib.decode('utf8').strip() for lib in send]
+    return reqs
 
-list_requirements = [str(ir.req) for ir in parse_requirements('requirements.txt', session=PipSession())]
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="mop-suit",
-    version="0.0.2",
+    name="mop-rules",
+    version="0.0.1",
     entry_points={
         'console_scripts': ['mop=mop:main'],
     },
@@ -32,9 +23,9 @@ setup(
     description="Полезная утилита, призванная сделать ваш python проект чище",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/ogurechik/mop",
+    url="https://github.com/ogurechik/mop-rules",
     packages=find_packages(),
-    install_requires=list_requirements,
+    install_requires=get_requirements(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
